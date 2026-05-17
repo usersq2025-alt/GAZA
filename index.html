@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>داشبورد أقساط وميزانية المدرسة</title>
   
-  <!-- خط كايرو الاحترافي -->
+  <!-- خط كايرو الاحترافي للنصوص العربية -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -56,10 +56,25 @@
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-    /* إجبار الأرقام على الصيغة الإنجليزية (1,2,3) */
-    input[type="number"] {
+    /* ========================================== */
+    /* إجبار الأرقام على الصيغة العربية (1,2,3) قاطعاً */
+    /* ========================================== */
+    .num-en,
+    input[type="number"], 
+    [dir="ltr"] {
       direction: ltr !important;
-      font-family: inherit;
+      /* استخدام خط لاتيني صريح لمنع المتصفح من استخدام الأرقام الهندية */
+      font-family: Arial, Helvetica, sans-serif !important;
+      unicode-bidi: isolate;
+      /* منع تبديل الأرقام حسب لغة النظام */
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* إخفاء أسهم الأرقام داخل حقول الإدخال لتكون أنظف */
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
     }
 
     /* ========================================== */
@@ -76,7 +91,7 @@
         font-size: 11px !important;
         -webkit-print-color-adjust: exact !important; 
         print-color-adjust: exact !important; 
-        zoom: 0.75 !important; /* ضمان احتواء المحتوى في صفحة واحدة */
+        zoom: 0.75 !important; 
       }
 
       @-moz-document url-prefix() {
@@ -89,18 +104,13 @@
         margin: 0 !important;
       }
       
-      /* إخفاء العناصر غير المطلوبة في الـ PDF */
       .no-print, .tabs, .actions, header p { display: none !important; }
-      
-      /* طباعة التبويب النشط فقط */
       .tab-content { display: none !important; }
       .tab-content.active { display: block !important; opacity: 1; transform: none; }
       
-      /* توسيط وتنسيق الهيدر */
       header { justify-content: center !important; margin-bottom: 12px !important; padding: 10px 0 !important; border-bottom: 2px solid #e2e8f0; }
       header h1 { font-size: 24pt !important; color: #1e293b !important; text-align: center; width: 100%; margin: 0 !important; }
       
-      /* تقليص الهوامش والفراغات لضمان التوافق بصفحة واحدة */
       .mb-8 { margin-bottom: 10px !important; }
       .mb-6 { margin-bottom: 10px !important; }
       .gap-6 { gap: 10px !important; }
@@ -109,11 +119,9 @@
       .p-4 { padding: 6px !important; }
       .p-3 { padding: 4px !important; }
       
-      /* التخلص من الظلال وإضافة حدود خفيفة */
       * { box-shadow: none !important; }
       .print-border { border: 1px solid #cbd5e1 !important; border-radius: 8px !important; break-inside: avoid; }
       
-      /* تحويل حقول الإدخال إلى نصوص عادية في الطباعة فقط */
       input[type="number"], input[type="text"] {
         border: none !important;
         background: transparent !important;
@@ -123,20 +131,42 @@
         padding: 0 !important;
         height: auto !important;
       }
-      input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
       
-      /* الحفاظ على بنية الجريد (Grid) جنباً إلى جنب */
       .grid { display: grid !important; }
       .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
       .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
       .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
       .lg\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
       
-      /* تصغير نصوص الجداول قليلاً */
       table th, table td { font-size: 11px !important; padding: 4px 6px !important; }
       .text-3xl { font-size: 1.5rem !important; }
       .text-2xl { font-size: 1.25rem !important; }
       .text-lg { font-size: 1rem !important; }
+
+      /* ====================================================== */
+      /* إجبار الأرقام الغربية (1,2,3) في الطباعة              */
+      /* خط Cairo يعرض أرقاماً هندية عند lang=ar لذا نتجاوزه   */
+      /* ====================================================== */
+      .num-en,
+      [dir="ltr"],
+      [lang="en"],
+      input[type="number"],
+      input[type="text"],
+      td.num-en,
+      th.num-en,
+      span.num-en,
+      h3.num-en,
+      p.num-en {
+        font-family: Arial, Helvetica, 'Times New Roman', sans-serif !important;
+        direction: ltr !important;
+        unicode-bidi: isolate !important;
+      }
+
+      /* تطبيق على جميع خلايا الجداول التي تحتوي أرقاماً */
+      table td[dir="ltr"],
+      table td[lang="en"] {
+        font-family: Arial, Helvetica, sans-serif !important;
+      }
     }
   </style>
 </head>
@@ -156,7 +186,7 @@
           <h1 class="text-3xl font-bold tracking-tight">داشبورد الميزانية والأقساط</h1>
         </div>
         <p class="text-slate-300 max-w-2xl text-sm leading-relaxed no-print">
-          نظام تقارير مالي متكامل: التبويب الأول يستعرض وضع السنة الحالية (2025-2026)، والتبويب الثاني يتيح محاكاة وتخطيط العام القادم (2026-2027) مع إمكانية تعديل المعطيات.
+          نظام تقارير مالي متكامل: التبويب الأول يستعرض وضع السنة الحالية (<span class="num-en" lang="en">2025-2026</span>)، والتبويب الثاني يتيح محاكاة وتخطيط العام القادم (<span class="num-en" lang="en">2026-2027</span>) مع إمكانية تعديل المعطيات.
         </p>
       </div>
       <div class="actions flex gap-3 w-full md:w-auto">
@@ -174,10 +204,10 @@
     <!-- الأزرار التبويبية -->
     <div class="tabs flex flex-wrap gap-2 mb-8 bg-white/10 p-1.5 rounded-2xl w-fit backdrop-blur-md no-print border border-white/20 shadow-sm mx-auto md:mx-0">
       <button class="tab-btn active px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 text-slate-700 bg-white shadow-sm" onclick="openTab('reportTab', this)">
-        <i class="fa-solid fa-chart-pie me-2 text-primary-600"></i> تقرير السنة الحالية 25/26
+        <i class="fa-solid fa-chart-pie me-2 text-primary-600"></i> تقرير السنة الحالية <span class="num-en mx-1" lang="en">25/26</span>
       </button>
       <button class="tab-btn px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 text-white hover:bg-white/20" onclick="openTab('planTab', this)">
-        <i class="fa-solid fa-sliders me-2"></i> خطة العام القادم 26/27
+        <i class="fa-solid fa-sliders me-2"></i> خطة العام القادم <span class="num-en mx-1" lang="en">26/27</span>
       </button>
     </div>
 
@@ -191,7 +221,7 @@
           <div class="flex justify-between items-start">
             <div>
               <p class="text-sm text-slate-500 font-semibold mb-1">إجمالي الطلاب</p>
-              <h3 class="text-3xl font-bold text-slate-800" id="reportStudents" dir="ltr">0</h3>
+              <h3 class="text-3xl font-bold text-slate-800 num-en" id="reportStudents" dir="ltr" lang="en">0</h3>
             </div>
             <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 text-xl no-print"><i class="fa-solid fa-users"></i></div>
           </div>
@@ -201,7 +231,7 @@
           <div class="flex justify-between items-start">
             <div>
               <p class="text-sm text-slate-500 font-semibold mb-1">إجمالي المصروفات</p>
-              <h3 class="text-3xl font-bold text-slate-800" id="reportTotalCost" dir="ltr">$0</h3>
+              <h3 class="text-3xl font-bold text-slate-800 num-en" id="reportTotalCost" dir="ltr" lang="en">$0</h3>
             </div>
             <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 text-xl no-print"><i class="fa-solid fa-money-bill-transfer"></i></div>
           </div>
@@ -211,7 +241,7 @@
           <div class="flex justify-between items-start">
             <div>
               <p class="text-sm text-slate-500 font-semibold mb-1">المحصل والدعم</p>
-              <h3 class="text-3xl font-bold text-slate-800" id="reportCollected" dir="ltr">$0</h3>
+              <h3 class="text-3xl font-bold text-slate-800 num-en" id="reportCollected" dir="ltr" lang="en">$0</h3>
             </div>
             <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 text-xl no-print"><i class="fa-solid fa-hand-holding-dollar"></i></div>
           </div>
@@ -221,7 +251,7 @@
           <div class="flex justify-between items-start">
             <div>
               <p class="text-sm text-slate-500 font-semibold mb-1">فجوة التمويل (العجز)</p>
-              <h3 class="text-3xl font-bold text-slate-800" id="reportGap" dir="ltr">$0</h3>
+              <h3 class="text-3xl font-bold text-slate-800 num-en" id="reportGap" dir="ltr" lang="en">$0</h3>
             </div>
             <div class="w-12 h-12 rounded-full bg-rose-50 flex items-center justify-center text-rose-600 text-xl no-print"><i class="fa-solid fa-chart-line-down"></i></div>
           </div>
@@ -237,14 +267,14 @@
           </div>
           <table class="w-full text-right text-sm">
             <tbody class="divide-y divide-slate-100">
-              <tr class="hover:bg-slate-50 transition-colors"><td class="p-4 text-slate-600">رواتب شهرية</td><td class="p-4 font-semibold text-left" id="rSalaryMonthly" dir="ltr">$0</td></tr>
-              <tr class="hover:bg-slate-50 transition-colors bg-slate-50/50"><td class="p-4 text-slate-600">كلفة الرواتب السنوية</td><td class="p-4 font-semibold text-slate-900 text-left" id="rSalaryAnnual" dir="ltr">$0</td></tr>
-              <tr class="hover:bg-slate-50 transition-colors"><td class="p-4 text-slate-600">مواصلات شهرية</td><td class="p-4 font-semibold text-left" id="rTransportMonthly" dir="ltr">$0</td></tr>
-              <tr class="hover:bg-slate-50 transition-colors bg-slate-50/50"><td class="p-4 text-slate-600">كلفة المواصلات السنوية</td><td class="p-4 font-semibold text-slate-900 text-left" id="rTransportAnnual" dir="ltr">$0</td></tr>
-              <tr class="hover:bg-slate-50 transition-colors"><td class="p-4 text-slate-600">مصروفات ولوجستيات شهرية</td><td class="p-4 font-semibold text-left" id="rOpsMonthly" dir="ltr">$0</td></tr>
-              <tr class="hover:bg-slate-50 transition-colors bg-slate-50/50"><td class="p-4 text-slate-600">مصروفات ولوجستيات سنوية</td><td class="p-4 font-semibold text-slate-900 text-left" id="rOpsAnnual" dir="ltr">$0</td></tr>
-              <tr class="hover:bg-slate-50 transition-colors"><td class="p-4 text-slate-600">تكاليف أخرى تسويات</td><td class="p-4 font-semibold text-left" id="rOther" dir="ltr">$0</td></tr>
-              <tr class="bg-slate-100" style="-webkit-print-color-adjust: exact; background-color: #f1f5f9 !important;"><td class="p-4 font-bold text-slate-800">إجمالي مصروفات العام</td><td class="p-4 font-bold text-lg text-slate-900 text-left" id="rTotalCost" dir="ltr">$0</td></tr>
+              <tr class="hover:bg-slate-50 transition-colors"><td class="p-4 text-slate-600">رواتب شهرية</td><td class="p-4 font-semibold text-left num-en" id="rSalaryMonthly" dir="ltr" lang="en">$0</td></tr>
+              <tr class="hover:bg-slate-50 transition-colors bg-slate-50/50"><td class="p-4 text-slate-600">كلفة الرواتب السنوية</td><td class="p-4 font-semibold text-slate-900 text-left num-en" id="rSalaryAnnual" dir="ltr" lang="en">$0</td></tr>
+              <tr class="hover:bg-slate-50 transition-colors"><td class="p-4 text-slate-600">مواصلات شهرية</td><td class="p-4 font-semibold text-left num-en" id="rTransportMonthly" dir="ltr" lang="en">$0</td></tr>
+              <tr class="hover:bg-slate-50 transition-colors bg-slate-50/50"><td class="p-4 text-slate-600">كلفة المواصلات السنوية</td><td class="p-4 font-semibold text-slate-900 text-left num-en" id="rTransportAnnual" dir="ltr" lang="en">$0</td></tr>
+              <tr class="hover:bg-slate-50 transition-colors"><td class="p-4 text-slate-600">مصروفات ولوجستيات شهرية</td><td class="p-4 font-semibold text-left num-en" id="rOpsMonthly" dir="ltr" lang="en">$0</td></tr>
+              <tr class="hover:bg-slate-50 transition-colors bg-slate-50/50"><td class="p-4 text-slate-600">مصروفات ولوجستيات سنوية</td><td class="p-4 font-semibold text-slate-900 text-left num-en" id="rOpsAnnual" dir="ltr" lang="en">$0</td></tr>
+              <tr class="hover:bg-slate-50 transition-colors"><td class="p-4 text-slate-600">تكاليف أخرى تسويات</td><td class="p-4 font-semibold text-left num-en" id="rOther" dir="ltr" lang="en">$0</td></tr>
+              <tr class="bg-slate-100" style="-webkit-print-color-adjust: exact; background-color: #f1f5f9 !important;"><td class="p-4 font-bold text-slate-800">إجمالي مصروفات العام</td><td class="p-4 font-bold text-lg text-slate-900 text-left num-en" id="rTotalCost" dir="ltr" lang="en">$0</td></tr>
             </tbody>
           </table>
         </div>
@@ -256,16 +286,16 @@
           </div>
           <table class="w-full text-right text-sm">
             <tbody class="divide-y divide-slate-100">
-              <tr class="hover:bg-slate-50 transition-colors"><td class="p-4 text-slate-600">الإيراد النظري من الأقساط الرسمية</td><td class="p-4 font-semibold text-left" id="rGrossTuition" dir="ltr">$0</td></tr>
-              <tr class="hover:bg-slate-50 transition-colors bg-slate-50/50"><td class="p-4 text-slate-600">التحصيل الفعلي / المتوفر حالياً</td><td class="p-4 font-semibold text-primary-600 text-left" id="rCollected" dir="ltr">$0</td></tr>
-              <tr class="hover:bg-slate-50 transition-colors"><td class="p-4 text-slate-600">الفرق بين النظري والمحصل</td><td class="p-4 font-semibold text-rose-500 text-left" id="rTuitionCollectionGap" dir="ltr">$0</td></tr>
-              <tr class="hover:bg-slate-50 transition-colors bg-slate-50/50"><td class="p-4 text-slate-600">محصلة الخصومات والإعفاءات</td><td class="p-4 font-semibold text-orange-500 text-left" id="rDiscountImpact" dir="ltr">$0</td></tr>
-              <tr class="hover:bg-slate-50 transition-colors"><td class="p-4 text-slate-600">نسبة الخصومات من الإيراد النظري</td><td class="p-4 font-semibold text-left" id="rDiscountImpactRate" dir="ltr">0%</td></tr>
-              <tr class="hover:bg-slate-50 transition-colors bg-slate-50/50"><td class="p-4 text-slate-600">فرق ناتج عن التحصيل الجزئي</td><td class="p-4 font-semibold text-left" id="rRemainingGap" dir="ltr">$0</td></tr>
-              <tr class="hover:bg-slate-50 transition-colors"><td class="p-4 text-slate-600">نسبة التغطية من المصروفات</td><td class="p-4 font-bold text-left" id="rCoverage" dir="ltr">0%</td></tr>
-              <tr class="hover:bg-slate-50 transition-colors bg-slate-50/50"><td class="p-4 text-slate-600">متوسط الكلفة السنوية للطالب</td><td class="p-4 font-semibold text-left" id="rCostPerStudent" dir="ltr">$0</td></tr>
-              <tr class="hover:bg-slate-50 transition-colors"><td class="p-4 text-slate-600">متوسط المحصل السنوي للطالب</td><td class="p-4 font-semibold text-left" id="rCollectedPerStudent" dir="ltr">$0</td></tr>
-              <tr class="bg-rose-50" style="-webkit-print-color-adjust: exact; background-color: #fff1f2 !important;"><td class="p-4 font-bold text-rose-800">العجز السنوي النهائي</td><td class="p-4 font-bold text-lg text-rose-700 text-left" id="rGap" dir="ltr">$0</td></tr>
+              <tr class="hover:bg-slate-50 transition-colors"><td class="p-4 text-slate-600">الإيراد النظري من الأقساط الرسمية</td><td class="p-4 font-semibold text-left num-en" id="rGrossTuition" dir="ltr" lang="en">$0</td></tr>
+              <tr class="hover:bg-slate-50 transition-colors bg-slate-50/50"><td class="p-4 text-slate-600">التحصيل الفعلي / المتوفر حالياً</td><td class="p-4 font-semibold text-primary-600 text-left num-en" id="rCollected" dir="ltr" lang="en">$0</td></tr>
+              <tr class="hover:bg-slate-50 transition-colors"><td class="p-4 text-slate-600">الفرق بين النظري والمحصل</td><td class="p-4 font-semibold text-rose-500 text-left num-en" id="rTuitionCollectionGap" dir="ltr" lang="en">$0</td></tr>
+              <tr class="hover:bg-slate-50 transition-colors bg-slate-50/50"><td class="p-4 text-slate-600">محصلة الخصومات والإعفاءات</td><td class="p-4 font-semibold text-orange-500 text-left num-en" id="rDiscountImpact" dir="ltr" lang="en">$0</td></tr>
+              <tr class="hover:bg-slate-50 transition-colors"><td class="p-4 text-slate-600">نسبة الخصومات من الإيراد النظري</td><td class="p-4 font-semibold text-left num-en" id="rDiscountImpactRate" dir="ltr" lang="en">0%</td></tr>
+              <tr class="hover:bg-slate-50 transition-colors bg-slate-50/50"><td class="p-4 text-slate-600">فرق ناتج عن التحصيل الجزئي</td><td class="p-4 font-semibold text-left num-en" id="rRemainingGap" dir="ltr" lang="en">$0</td></tr>
+              <tr class="hover:bg-slate-50 transition-colors"><td class="p-4 text-slate-600">نسبة التغطية من المصروفات</td><td class="p-4 font-bold text-left num-en" id="rCoverage" dir="ltr" lang="en">0%</td></tr>
+              <tr class="hover:bg-slate-50 transition-colors bg-slate-50/50"><td class="p-4 text-slate-600">متوسط الكلفة السنوية للطالب</td><td class="p-4 font-semibold text-left num-en" id="rCostPerStudent" dir="ltr" lang="en">$0</td></tr>
+              <tr class="hover:bg-slate-50 transition-colors"><td class="p-4 text-slate-600">متوسط المحصل السنوي للطالب</td><td class="p-4 font-semibold text-left num-en" id="rCollectedPerStudent" dir="ltr" lang="en">$0</td></tr>
+              <tr class="bg-rose-50" style="-webkit-print-color-adjust: exact; background-color: #fff1f2 !important;"><td class="p-4 font-bold text-rose-800">العجز السنوي النهائي</td><td class="p-4 font-bold text-lg text-rose-700 text-left num-en" id="rGap" dir="ltr" lang="en">$0</td></tr>
             </tbody>
           </table>
         </div>
@@ -274,7 +304,7 @@
       <!-- جدول الأقساط كمرجع -->
       <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm print-border">
          <div class="bg-slate-50 px-6 py-4 border-b border-slate-200" style="-webkit-print-color-adjust: exact; background-color: #f8fafc !important;">
-            <h2 class="text-lg font-bold text-slate-800">جدول الأقساط الرسمي المرجعي (25-26)</h2>
+            <h2 class="text-lg font-bold text-slate-800">جدول الأقساط الرسمي المرجعي (<span class="num-en" lang="en">25-26</span>)</h2>
           </div>
         <div class="overflow-x-auto">
           <table id="reportFeesTable" class="w-full text-right text-sm">
@@ -302,24 +332,24 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm print-border text-center flex flex-col items-center justify-center">
           <p class="text-sm text-slate-500 font-semibold mb-1">الطلاب المتوقعون</p>
-          <h3 class="text-3xl font-bold text-slate-800" id="totalStudents" dir="ltr">0</h3>
+          <h3 class="text-3xl font-bold text-slate-800 num-en" id="totalStudents" dir="ltr" lang="en">0</h3>
         </div>
         
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm print-border text-center flex flex-col items-center justify-center">
           <p class="text-sm text-slate-500 font-semibold mb-1">إجمالي دخل التعليم المتوقع</p>
-          <h3 class="text-3xl font-bold text-slate-800 text-primary-600" id="netRevenue" dir="ltr">$0</h3>
+          <h3 class="text-3xl font-bold text-slate-800 text-primary-600 num-en" id="netRevenue" dir="ltr" lang="en">$0</h3>
         </div>
 
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm print-border text-center flex flex-col items-center justify-center">
           <p class="text-sm text-slate-500 font-semibold mb-1">العجز / الوفر للتعليم</p>
-          <h3 class="text-3xl font-bold" id="surplusDeficit" dir="ltr">$0</h3>
+          <h3 class="text-3xl font-bold num-en" id="surplusDeficit" dir="ltr" lang="en">$0</h3>
           <p class="text-xs font-semibold mt-1 inline-block" id="surplusText">—</p>
         </div>
 
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm print-border flex flex-col justify-center">
           <div class="flex justify-between items-end mb-2">
              <p class="text-sm text-slate-500 font-semibold">نسبة التغطية للتعليم</p>
-             <span class="text-2xl font-bold text-slate-800" id="coverageRate" dir="ltr">0%</span>
+             <span class="text-2xl font-bold text-slate-800 num-en" id="coverageRate" dir="ltr" lang="en">0%</span>
           </div>
           <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
             <div class="h-full transition-all duration-700 ease-out print-color-adjust" id="coverageBar" style="width: 0%; -webkit-print-color-adjust: exact;"></div>
@@ -333,7 +363,7 @@
         <!-- 1) مصاريف التعليم -->
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm print-border">
           <div class="flex items-center gap-3 mb-5 pb-3 border-b border-slate-100">
-            <div class="bg-indigo-100 text-indigo-600 w-8 h-8 rounded-lg flex items-center justify-center font-bold no-print">1</div>
+            <div class="bg-indigo-100 text-indigo-600 w-8 h-8 rounded-lg flex items-center justify-center font-bold no-print num-en" lang="en">1</div>
             <h2 class="font-bold text-slate-800">مصاريف التعليم</h2>
           </div>
           <div class="space-y-4">
@@ -341,23 +371,23 @@
               <label class="block text-xs font-bold text-slate-500 mb-1.5 flex justify-between">
                 <span>الرواتب الشهرية ($)</span> <i class="fa-solid fa-pen text-slate-300 no-print"></i>
               </label>
-              <!-- إضافة dir="ltr" لحقول الإدخال لتثبيت الأرقام الإنجليزية -->
-              <input id="monthlySalaries" type="number" dir="ltr" value="24000" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:bg-white focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center" />
+              <!-- إضافة lang="en" لمنع النظام من تحويل الأرقام -->
+              <input id="monthlySalaries" type="number" lang="en" dir="ltr" value="19000" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:bg-white focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-500 mb-1.5 flex justify-between">
                 <span>المصروفات الشهرية ($)</span> <i class="fa-solid fa-pen text-slate-300 no-print"></i>
               </label>
-              <input id="monthlyOps" type="number" dir="ltr" value="1865" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:bg-white focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center" />
+              <input id="monthlyOps" type="number" lang="en" dir="ltr" value="1865" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:bg-white focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
             </div>
             <div class="grid grid-cols-2 gap-3">
                <div>
                   <label class="block text-xs font-bold text-slate-500 mb-1.5">عدد الأشهر</label>
-                  <input id="months" type="number" dir="ltr" value="8" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center" />
+                  <input id="months" type="number" lang="en" dir="ltr" value="8" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
                </div>
                <div>
                   <label class="block text-xs font-bold text-slate-500 mb-1.5">تكاليف أخرى ($)</label>
-                  <input id="otherAnnualCosts" type="number" dir="ltr" value="6940" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center" />
+                  <input id="otherAnnualCosts" type="number" lang="en" dir="ltr" value="6940" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
                </div>
             </div>
           </div>
@@ -366,18 +396,18 @@
         <!-- 2) الأقساط والتحصيل -->
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm print-border">
           <div class="flex items-center gap-3 mb-5 pb-3 border-b border-slate-100">
-            <div class="bg-primary-100 text-primary-600 w-8 h-8 rounded-lg flex items-center justify-center font-bold no-print">2</div>
+            <div class="bg-primary-100 text-primary-600 w-8 h-8 rounded-lg flex items-center justify-center font-bold no-print num-en" lang="en">2</div>
             <h2 class="font-bold text-slate-800">الأقساط والتحصيل</h2>
           </div>
           <div class="space-y-4">
             <div class="grid grid-cols-2 gap-3">
               <div>
                 <label class="block text-xs font-bold text-slate-500 mb-1.5">خصومات (%)</label>
-                <input id="discountRate" type="number" dir="ltr" value="7" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-rose-600 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center" />
+                <input id="discountRate" type="number" lang="en" dir="ltr" value="7" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-rose-600 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-500 mb-1.5">تحصيل (%)</label>
-                <input id="collectionRate" type="number" dir="ltr" value="100" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-emerald-600 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center" />
+                <input id="collectionRate" type="number" lang="en" dir="ltr" value="100" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-emerald-600 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
               </div>
             </div>
             <div>
@@ -385,13 +415,13 @@
                 <span>زيادة الأقساط المقترحة (%)</span> <i class="fa-solid fa-pen text-slate-300 no-print"></i>
               </label>
               <div class="relative flex items-center print:justify-center">
-                <input id="increaseRate" type="number" dir="ltr" value="28.99" step="0.01" oninput="calculate()" class="w-full bg-blue-50 border-2 border-blue-300 text-blue-800 text-xl rounded-xl px-4 py-3 hover:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:border-blue-600 outline-none transition-all font-bold text-center pl-10 shadow-sm" />
-                <div class="absolute left-4 text-blue-500 font-bold text-lg no-print" dir="ltr">%</div>
+                <input id="increaseRate" type="number" lang="en" dir="ltr" value="28.99" step="0.01" oninput="calculate()" class="w-full bg-blue-50 border-2 border-blue-300 text-blue-800 text-xl rounded-xl px-4 py-3 hover:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:border-blue-600 outline-none transition-all font-bold text-center pl-10 shadow-sm num-en" />
+                <div class="absolute left-4 text-blue-500 font-bold text-lg no-print num-en" dir="ltr" lang="en">%</div>
               </div>
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-500 mb-1.5">تبرعات/دعم متوقع ($)</label>
-              <input id="donations" type="number" dir="ltr" value="51500" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center" />
+              <input id="donations" type="number" lang="en" dir="ltr" value="51500" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
             </div>
           </div>
         </div>
@@ -399,7 +429,7 @@
         <!-- 3) المواصلات المستقلة -->
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm print-border">
           <div class="flex items-center gap-3 mb-5 pb-3 border-b border-slate-100">
-            <div class="bg-amber-100 text-amber-600 w-8 h-8 rounded-lg flex items-center justify-center font-bold no-print">3</div>
+            <div class="bg-amber-100 text-amber-600 w-8 h-8 rounded-lg flex items-center justify-center font-bold no-print num-en" lang="en">3</div>
             <h2 class="font-bold text-slate-800">المواصلات المستقلة</h2>
           </div>
           <div class="space-y-4">
@@ -407,19 +437,19 @@
               <label class="block text-xs font-bold text-slate-500 mb-1.5 flex justify-between">
                 <span>كلفة الباصات الشهرية ($)</span> <i class="fa-solid fa-pen text-slate-300 no-print"></i>
               </label>
-              <input id="monthlyTransportCost" type="number" dir="ltr" value="4300" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center" />
+              <input id="monthlyTransportCost" type="number" lang="en" dir="ltr" value="4300" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-500 mb-1.5 flex justify-between">
                 <span>عدد المشتركين المتوقع</span> <i class="fa-solid fa-pen text-slate-300 no-print"></i>
               </label>
-              <input id="busStudents" type="number" dir="ltr" value="266" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center" />
+              <input id="busStudents" type="number" lang="en" dir="ltr" value="266" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-500 mb-1.5 flex justify-between">
                 <span>اشتراك الباص المقترح/طالب ($)</span> <i class="fa-solid fa-pen text-amber-300 no-print"></i>
               </label>
-              <input id="busFee" type="number" dir="ltr" value="16.2" step="0.1" oninput="calculate()" class="w-full bg-amber-50 border-2 border-amber-300 text-amber-900 text-base rounded-xl px-4 py-2.5 hover:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/20 focus:border-amber-600 outline-none transition-all font-bold shadow-sm text-center" />
+              <input id="busFee" type="number" lang="en" dir="ltr" value="16.2" step="0.1" oninput="calculate()" class="w-full bg-amber-50 border-2 border-amber-300 text-amber-900 text-base rounded-xl px-4 py-2.5 hover:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/20 focus:border-amber-600 outline-none transition-all font-bold shadow-sm text-center num-en" />
             </div>
           </div>
         </div>
@@ -434,13 +464,13 @@
           </div>
           <table class="w-full text-right text-sm">
             <tbody class="divide-y divide-slate-100">
-              <tr class="hover:bg-slate-50"><td class="p-3 text-slate-600">الإيراد النظري التام قبل الزيادة</td><td class="p-3 font-semibold text-left" id="grossTuition" dir="ltr">$0</td></tr>
-              <tr class="hover:bg-slate-50 bg-slate-50/50"><td class="p-3 text-slate-600">الإيراد النظري بعد الزيادة</td><td class="p-3 font-semibold text-primary-600 text-left" id="increasedTuition" dir="ltr">$0</td></tr>
-              <tr class="hover:bg-slate-50"><td class="p-3 text-slate-600">الإيراد المتوقع (بعد الخصم والتحصيل)</td><td class="p-3 font-semibold text-left" id="netTuition" dir="ltr">$0</td></tr>
-              <tr class="hover:bg-slate-50 bg-slate-50/50"><td class="p-3 text-slate-600">الدعم/التبرعات المضافة</td><td class="p-3 font-semibold text-left" id="donationsOut" dir="ltr">$0</td></tr>
-              <tr class="hover:bg-slate-50"><td class="p-3 font-bold text-slate-800">إجمالي دخل التعليم</td><td class="p-3 font-bold text-primary-700 text-left" id="totalEducationRevenue" dir="ltr">$0</td></tr>
-              <tr class="hover:bg-slate-50 bg-slate-50/50"><td class="p-3 font-bold text-slate-800">إجمالي تكاليف التعليم</td><td class="p-3 font-bold text-slate-700 text-left" id="educationCost" dir="ltr">$0</td></tr>
-              <tr class="bg-indigo-900 text-white" style="-webkit-print-color-adjust: exact; background-color: #312e81 !important; color: white !important;"><td class="p-3 font-bold">النتيجة (عجز / وفر)</td><td class="p-3 font-bold text-lg text-left" id="educationGap" dir="ltr">$0</td></tr>
+              <tr class="hover:bg-slate-50"><td class="p-3 text-slate-600">الإيراد النظري التام قبل الزيادة</td><td class="p-3 font-semibold text-left num-en" id="grossTuition" dir="ltr" lang="en">$0</td></tr>
+              <tr class="hover:bg-slate-50 bg-slate-50/50"><td class="p-3 text-slate-600">الإيراد النظري بعد الزيادة</td><td class="p-3 font-semibold text-primary-600 text-left num-en" id="increasedTuition" dir="ltr" lang="en">$0</td></tr>
+              <tr class="hover:bg-slate-50"><td class="p-3 text-slate-600">الإيراد المتوقع (بعد الخصم والتحصيل)</td><td class="p-3 font-semibold text-left num-en" id="netTuition" dir="ltr" lang="en">$0</td></tr>
+              <tr class="hover:bg-slate-50 bg-slate-50/50"><td class="p-3 text-slate-600">الدعم/التبرعات المضافة</td><td class="p-3 font-semibold text-left num-en" id="donationsOut" dir="ltr" lang="en">$0</td></tr>
+              <tr class="hover:bg-slate-50"><td class="p-3 font-bold text-slate-800">إجمالي دخل التعليم</td><td class="p-3 font-bold text-primary-700 text-left num-en" id="totalEducationRevenue" dir="ltr" lang="en">$0</td></tr>
+              <tr class="hover:bg-slate-50 bg-slate-50/50"><td class="p-3 font-bold text-slate-800">إجمالي تكاليف التعليم</td><td class="p-3 font-bold text-slate-700 text-left num-en" id="educationCost" dir="ltr" lang="en">$0</td></tr>
+              <tr class="bg-indigo-900 text-white" style="-webkit-print-color-adjust: exact; background-color: #312e81 !important; color: white !important;"><td class="p-3 font-bold">النتيجة (عجز / وفر)</td><td class="p-3 font-bold text-lg text-left num-en" id="educationGap" dir="ltr" lang="en">$0</td></tr>
             </tbody>
           </table>
         </div>
@@ -453,17 +483,17 @@
           <div class="flex-1">
              <table class="w-full text-right text-sm">
                <tbody class="divide-y divide-slate-100">
-                 <tr class="hover:bg-slate-50"><td class="p-4 text-slate-600">كلفة المواصلات السنوية</td><td class="p-4 font-semibold text-left" id="annualBusCost" dir="ltr">$0</td></tr>
-                 <tr class="hover:bg-slate-50 bg-slate-50/50"><td class="p-4 text-slate-600">إيراد الباص المتوقع</td><td class="p-4 font-semibold text-left" id="annualBusRevenue" dir="ltr">$0</td></tr>
-                 <tr class="bg-slate-100" style="-webkit-print-color-adjust: exact; background-color: #f1f5f9 !important;"><td class="p-4 font-bold text-slate-800">العجز/الوفر في المواصلات</td><td class="p-4 font-bold text-lg text-left" id="busGap" dir="ltr">$0</td></tr>
+                 <tr class="hover:bg-slate-50"><td class="p-4 text-slate-600">كلفة المواصلات السنوية</td><td class="p-4 font-semibold text-left num-en" id="annualBusCost" dir="ltr" lang="en">$0</td></tr>
+                 <tr class="hover:bg-slate-50 bg-slate-50/50"><td class="p-4 text-slate-600">إيراد الباص المتوقع</td><td class="p-4 font-semibold text-left num-en" id="annualBusRevenue" dir="ltr" lang="en">$0</td></tr>
+                 <tr class="bg-slate-100" style="-webkit-print-color-adjust: exact; background-color: #f1f5f9 !important;"><td class="p-4 font-bold text-slate-800">العجز/الوفر في المواصلات</td><td class="p-4 font-bold text-lg text-left num-en" id="busGap" dir="ltr" lang="en">$0</td></tr>
                </tbody>
              </table>
              <div class="p-4 mt-2 flex items-center justify-between bg-white border-t border-slate-100">
                 <div>
-                   <p class="text-xs text-slate-500 font-bold mb-1">الاشتراك الشهري اللازم لـ 0 عجز:</p>
+                   <p class="text-xs text-slate-500 font-bold mb-1">الاشتراك الشهري اللازم لـ <span class="num-en" lang="en">0</span> عجز:</p>
                    <p class="text-[10px] text-slate-400 no-print">لتحقيق التوازن التام في بند النقل</p>
                 </div>
-                <div class="bg-amber-100 text-amber-800 font-bold px-4 py-2 rounded-xl text-lg shadow-sm" id="requiredBusFee" dir="ltr" style="-webkit-print-color-adjust: exact; background-color: #fef3c7 !important;">$0</div>
+                <div class="bg-amber-100 text-amber-800 font-bold px-4 py-2 rounded-xl text-lg shadow-sm num-en" id="requiredBusFee" dir="ltr" lang="en" style="-webkit-print-color-adjust: exact; background-color: #fef3c7 !important;">$0</div>
              </div>
           </div>
         </div>
@@ -531,11 +561,11 @@
       if (!el) return;
       el.textContent = (n >= 0 ? '+' : '') + money(n);
       if (n >= 0) {
-         el.className = 'p-3 font-bold text-lg text-emerald-600 text-left';
+         el.className = 'p-3 font-bold text-lg text-emerald-600 text-left num-en';
          el.style.backgroundColor = '#ecfdf5';
          el.style.webkitPrintColorAdjust = 'exact';
       } else {
-         el.className = 'p-3 font-bold text-lg text-rose-600 text-left';
+         el.className = 'p-3 font-bold text-lg text-rose-600 text-left num-en';
          el.style.backgroundColor = '#fff1f2';
          el.style.webkitPrintColorAdjust = 'exact';
       }
@@ -567,14 +597,14 @@
         tr.innerHTML = `
           <td class="p-3 font-semibold text-slate-700">${s.name}</td>
           <td class="p-2 text-center">
-             <input type="number" dir="ltr" class="w-24 text-center bg-white border-2 border-slate-300 rounded-lg px-2 py-1.5 hover:border-primary-400 focus:bg-white focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none text-sm font-bold shadow-sm transition-all print:w-full print:border-none print:shadow-none print:bg-transparent" value="${s.students}" oninput="stages[${i}].students=Number(this.value)||0; renderReportTable(); calculate()" />
+             <input type="number" lang="en" dir="ltr" class="w-24 text-center bg-white border-2 border-slate-300 rounded-lg px-2 py-1.5 hover:border-primary-400 focus:bg-white focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none text-sm font-bold shadow-sm transition-all print:w-full print:border-none print:shadow-none print:bg-transparent num-en" value="${s.students}" oninput="stages[${i}].students=Number(this.value)||0; renderReportTable(); calculate()" />
           </td>
           <td class="p-2 text-center">
-             <input type="number" dir="ltr" class="w-24 text-center bg-white border-2 border-slate-300 rounded-lg px-2 py-1.5 hover:border-primary-400 focus:bg-white focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none text-sm font-bold shadow-sm transition-all print:w-full print:border-none print:shadow-none print:bg-transparent" value="${s.fee}" oninput="stages[${i}].fee=Number(this.value)||0; renderReportTable(); calculate()" />
+             <input type="number" lang="en" dir="ltr" class="w-24 text-center bg-white border-2 border-slate-300 rounded-lg px-2 py-1.5 hover:border-primary-400 focus:bg-white focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none text-sm font-bold shadow-sm transition-all print:w-full print:border-none print:shadow-none print:bg-transparent num-en" value="${s.fee}" oninput="stages[${i}].fee=Number(this.value)||0; renderReportTable(); calculate()" />
           </td>
-          <td class="p-3 text-center font-bold text-blue-700 bg-blue-50/30" id="newFee-${i}" dir="ltr" style="-webkit-print-color-adjust: exact; background-color: #eff6ff !important;">$0</td>
-          <td class="p-3 text-center text-slate-500" id="gross-${i}" dir="ltr">$0</td>
-          <td class="p-3 text-center font-bold text-emerald-700 bg-emerald-50/30" id="net-${i}" dir="ltr" style="-webkit-print-color-adjust: exact; background-color: #ecfdf5 !important;">$0</td>
+          <td class="p-3 text-center font-bold text-blue-700 bg-blue-50/30 num-en" id="newFee-${i}" dir="ltr" lang="en" style="-webkit-print-color-adjust: exact; background-color: #eff6ff !important;">$0</td>
+          <td class="p-3 text-center text-slate-500 num-en" id="gross-${i}" dir="ltr" lang="en">$0</td>
+          <td class="p-3 text-center font-bold text-emerald-700 bg-emerald-50/30 num-en" id="net-${i}" dir="ltr" lang="en" style="-webkit-print-color-adjust: exact; background-color: #ecfdf5 !important;">$0</td>
         `;
         tbody.appendChild(tr);
       });
@@ -597,10 +627,10 @@
         tr.className = 'hover:bg-slate-50';
         tr.innerHTML = `
           <td class="p-3 text-slate-700">${s.name}</td>
-          <td class="p-3 text-center font-semibold" dir="ltr">${s.students}</td>
-          <td class="p-3 text-center" dir="ltr">${money(s.fee)}</td>
-          <td class="p-3 text-center" dir="ltr">${money(gross)}</td>
-          <td class="p-3 text-center font-semibold text-primary-600" dir="ltr">${money(net)}</td>
+          <td class="p-3 text-center font-semibold num-en" dir="ltr" lang="en">${s.students}</td>
+          <td class="p-3 text-center num-en" dir="ltr" lang="en">${money(s.fee)}</td>
+          <td class="p-3 text-center num-en" dir="ltr" lang="en">${money(gross)}</td>
+          <td class="p-3 text-center font-semibold text-primary-600 num-en" dir="ltr" lang="en">${money(net)}</td>
         `;
         tbody.appendChild(tr);
       });
@@ -611,10 +641,10 @@
       trSum.style.backgroundColor = '#f1f5f9';
       trSum.innerHTML = `
           <td class="p-3">الإجمالي المرجعي</td>
-          <td class="p-3 text-center" dir="ltr">${totalStudents}</td>
-          <td class="p-3 text-center" dir="ltr">-</td>
-          <td class="p-3 text-center" dir="ltr">${money(totalGross)}</td>
-          <td class="p-3 text-center text-primary-700" dir="ltr">${money(totalNet)}</td>
+          <td class="p-3 text-center num-en" dir="ltr" lang="en">${totalStudents}</td>
+          <td class="p-3 text-center num-en" dir="ltr" lang="en">-</td>
+          <td class="p-3 text-center num-en" dir="ltr" lang="en">${money(totalGross)}</td>
+          <td class="p-3 text-center text-primary-700 num-en" dir="ltr" lang="en">${money(totalNet)}</td>
       `;
       tbody.appendChild(trSum);
     }
@@ -665,14 +695,14 @@
       const elSurplusText = document.getElementById('surplusText');
       if(educationGap >= 0) {
          elSurplusDeficit.textContent = '+' + money(educationGap);
-         elSurplusDeficit.className = 'text-3xl font-bold text-emerald-500';
+         elSurplusDeficit.className = 'text-3xl font-bold text-emerald-500 num-en';
          elSurplusText.textContent = 'وفر مالي متوقع';
          elSurplusText.className = 'text-xs font-semibold mt-1 text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full print-color-adjust';
          elSurplusText.style.webkitPrintColorAdjust = 'exact';
          elSurplusText.style.backgroundColor = '#d1fae5';
       } else {
          elSurplusDeficit.textContent = '-' + money(Math.abs(educationGap));
-         elSurplusDeficit.className = 'text-3xl font-bold text-rose-500';
+         elSurplusDeficit.className = 'text-3xl font-bold text-rose-500 num-en';
          elSurplusText.textContent = 'عجز مالي متوقع';
          elSurplusText.className = 'text-xs font-semibold mt-1 text-rose-700 bg-rose-100 px-3 py-1 rounded-full print-color-adjust';
          elSurplusText.style.webkitPrintColorAdjust = 'exact';
@@ -735,7 +765,7 @@
       
       const elRCoverage = document.getElementById('rCoverage');
       elRCoverage.textContent = pct(reportCoverage);
-      elRCoverage.className = `p-4 font-bold text-left ${reportCoverage >= 100 ? 'text-emerald-600' : 'text-rose-600'}`;
+      elRCoverage.className = `p-4 font-bold text-left num-en ${reportCoverage >= 100 ? 'text-emerald-600' : 'text-rose-600'}`;
       
       const elRGap = document.getElementById('rGap');
       elRGap.textContent = (reportGap >= 0 ? '+' : '-') + money(Math.abs(reportGap));
@@ -761,7 +791,7 @@
         alertBox.style.color = '#065f46';
         icon.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600"></i>';
         title.textContent = 'الخطة متوازنة';
-        text.innerHTML = `يغطي دخل التعليم المتوقع جميع التكاليف بنسبة <strong dir="ltr">${pct(coverage)}</strong>. يوجد وفر بقيمة <strong dir="ltr">${money(gap)}</strong>. يبقى بند النقل منفصلاً ويجب أن يغطي نفسه من اشتراكات الباصات.`;
+        text.innerHTML = `يغطي دخل التعليم المتوقع جميع التكاليف بنسبة <strong dir="ltr" lang="en" class="num-en">${pct(coverage)}</strong>. يوجد وفر بقيمة <strong dir="ltr" lang="en" class="num-en">${money(gap)}</strong>. يبقى بند النقل منفصلاً ويجب أن يغطي نفسه من اشتراكات الباصات.`;
       } else {
         alertBox.className = 'mb-6 rounded-2xl border shadow-sm print-border p-6';
         alertBox.style.backgroundColor = '#fff1f2';
@@ -770,14 +800,14 @@
         icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-rose-600"></i>';
         title.textContent = 'يتطلب إجراء لتعويض العجز';
         const neededIncreaseBase = increasedTuition > 0 ? Math.abs(gap) / (increasedTuition * (1 - discountRate) * collectionRate) * 100 : 0;
-        text.innerHTML = `يوجد عجز تعليمي متوقع بقيمة <span class="font-bold text-rose-700 bg-white px-2 py-0.5 rounded border border-rose-100" dir="ltr">${money(Math.abs(gap))}</span>. مع ثبات نسب الخصم والتحصيل، تحتاج المدرسة إلى زيادة الأقساط بمقدار إضافي يبلغ حوالي <strong dir="ltr">${pct(neededIncreaseBase)}</strong>، أو الحصول على دعم مالي بنفس قيمة العجز لتحقيق نقطة التعادل.`;
+        text.innerHTML = `يوجد عجز تعليمي متوقع بقيمة <span class="font-bold text-rose-700 bg-white px-2 py-0.5 rounded border border-rose-100 num-en" dir="ltr" lang="en">${money(Math.abs(gap))}</span>. مع ثبات نسب الخصم والتحصيل، تحتاج المدرسة إلى زيادة الأقساط بمقدار إضافي يبلغ حوالي <strong dir="ltr" lang="en" class="num-en">${pct(neededIncreaseBase)}</strong>، أو الحصول على دعم مالي بنفس قيمة العجز لتحقيق نقطة التعادل.`;
       }
     }
 
     // استعادة الأرقام الافتراضية
     function resetDefaults() {
       stages = JSON.parse(JSON.stringify(defaultStages));
-      document.getElementById('monthlySalaries').value = 24000;
+      document.getElementById('monthlySalaries').value = 19000;
       document.getElementById('monthlyOps').value = 1865;
       document.getElementById('months').value = 8;
       document.getElementById('otherAnnualCosts').value = 6940;
@@ -794,16 +824,68 @@
         renderPlanTable();
         renderReportTable();
         calculate();
+        fixInputNumerals();
         document.body.style.opacity = 1;
       }, 150);
     }
+
+    // ===================================================
+    // تحويل الأرقام الهندية (٠١٢٣...) إلى عربية (0123...)
+    // في جميع حقول الإدخال — سواء عند التحميل أو الكتابة
+    // ===================================================
+    function toWesternDigits(s) {
+      // تحويل الأرقام العربية-الهندية (U+0660–U+0669) إلى أرقام غربية
+      return String(s).replace(/[\u0660-\u0669]/g, function(d) {
+        return d.charCodeAt(0) - 0x0660;
+      });
+    }
+
+    function fixInputNumerals() {
+      document.querySelectorAll('input').forEach(function(inp) {
+        var fixed = toWesternDigits(inp.value);
+        if (inp.value !== fixed) inp.value = fixed;
+      });
+    }
+
+    // اعتراض أي إدخال للمستخدم وتحويله فوراً
+    document.addEventListener('input', function(e) {
+      if (e.target.tagName === 'INPUT') {
+        var pos = e.target.selectionStart;
+        var fixed = toWesternDigits(e.target.value);
+        if (e.target.value !== fixed) {
+          e.target.value = fixed;
+          try { e.target.setSelectionRange(pos, pos); } catch(err) {}
+        }
+      }
+    }, true);
 
     // التهيئة عند تحميل الصفحة لأول مرة
     window.onload = () => {
       renderPlanTable();
       renderReportTable();
       calculate();
+      // تصحيح أي أرقام هندية بعد التهيئة
+      setTimeout(fixInputNumerals, 100);
     };
+
+    // ===================================================
+    // إجبار الأرقام الغربية (0-9) عند الطباعة
+    // نضيف lang="en" مؤقتاً على <html> لمنع المتصفح
+    // من تحويل الأرقام إلى الصيغة الهندية
+    // ===================================================
+    window.addEventListener('beforeprint', () => {
+      // تطبيق خط Arial على كل عناصر الأرقام
+      document.querySelectorAll('.num-en, [dir="ltr"], [lang="en"]').forEach(el => {
+        el.style.fontFamily = 'Arial, Helvetica, sans-serif';
+      });
+    });
+
+    window.addEventListener('afterprint', () => {
+      // إزالة التعديل بعد الطباعة (يعود للخط الأصلي)
+      document.querySelectorAll('.num-en, [dir="ltr"], [lang="en"]').forEach(el => {
+        el.style.fontFamily = '';
+      });
+    });
   </script>
 </body>
 </html>
