@@ -57,20 +57,17 @@
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
     /* ========================================== */
-    /* إجبار الأرقام على الصيغة العربية (1,2,3) قاطعاً */
+    /* إجبار الأرقام على الصيغة الإنجليزية (1,2,3) */
     /* ========================================== */
     .num-en,
     input[type="number"], 
     [dir="ltr"] {
       direction: ltr !important;
-      /* استخدام خط لاتيني صريح لمنع المتصفح من استخدام الأرقام الهندية */
       font-family: Arial, Helvetica, sans-serif !important;
       unicode-bidi: isolate;
-      /* منع تبديل الأرقام حسب لغة النظام */
       font-variant-numeric: tabular-nums;
     }
 
-    /* إخفاء أسهم الأرقام داخل حقول الإدخال لتكون أنظف */
     input[type=number]::-webkit-inner-spin-button, 
     input[type=number]::-webkit-outer-spin-button { 
       -webkit-appearance: none; 
@@ -81,36 +78,21 @@
     /* إعدادات الطباعة (صفحة واحدة A4 أفقي)       */
     /* ========================================== */
     @media print {
-      @page { 
-        size: A4 landscape; 
-        margin: 5mm; 
-      }
-      
+      @page { size: A4 landscape; margin: 5mm; }
       body { 
-        background: white !important; 
-        font-size: 11px !important;
-        -webkit-print-color-adjust: exact !important; 
-        print-color-adjust: exact !important; 
+        background: white !important; font-size: 11px !important;
+        -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; 
         zoom: 0.75 !important; 
       }
-
       @-moz-document url-prefix() {
         body { transform: scale(0.75); transform-origin: top center; width: 133%; }
       }
-      
-      .container { 
-        max-width: 100% !important; 
-        padding: 0 !important; 
-        margin: 0 !important;
-      }
-      
+      .container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
       .no-print, .tabs, .actions, header p { display: none !important; }
       .tab-content { display: none !important; }
       .tab-content.active { display: block !important; opacity: 1; transform: none; }
-      
       header { justify-content: center !important; margin-bottom: 12px !important; padding: 10px 0 !important; border-bottom: 2px solid #e2e8f0; }
       header h1 { font-size: 24pt !important; color: #1e293b !important; text-align: center; width: 100%; margin: 0 !important; }
-      
       .mb-8 { margin-bottom: 10px !important; }
       .mb-6 { margin-bottom: 10px !important; }
       .gap-6 { gap: 10px !important; }
@@ -118,55 +100,21 @@
       .p-6 { padding: 10px !important; }
       .p-4 { padding: 6px !important; }
       .p-3 { padding: 4px !important; }
-      
       * { box-shadow: none !important; }
       .print-border { border: 1px solid #cbd5e1 !important; border-radius: 8px !important; break-inside: avoid; }
-      
       input[type="number"], input[type="text"] {
-        border: none !important;
-        background: transparent !important;
-        font-weight: 800 !important;
-        color: #0f172a !important;
-        text-align: center !important;
-        padding: 0 !important;
-        height: auto !important;
+        border: none !important; background: transparent !important; font-weight: 800 !important;
+        color: #0f172a !important; text-align: center !important; padding: 0 !important; height: auto !important;
       }
-      
       .grid { display: grid !important; }
       .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
       .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
       .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
       .lg\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
-      
       table th, table td { font-size: 11px !important; padding: 4px 6px !important; }
       .text-3xl { font-size: 1.5rem !important; }
       .text-2xl { font-size: 1.25rem !important; }
       .text-lg { font-size: 1rem !important; }
-
-      /* ====================================================== */
-      /* إجبار الأرقام الغربية (1,2,3) في الطباعة              */
-      /* خط Cairo يعرض أرقاماً هندية عند lang=ar لذا نتجاوزه   */
-      /* ====================================================== */
-      .num-en,
-      [dir="ltr"],
-      [lang="en"],
-      input[type="number"],
-      input[type="text"],
-      td.num-en,
-      th.num-en,
-      span.num-en,
-      h3.num-en,
-      p.num-en {
-        font-family: Arial, Helvetica, 'Times New Roman', sans-serif !important;
-        direction: ltr !important;
-        unicode-bidi: isolate !important;
-      }
-
-      /* تطبيق على جميع خلايا الجداول التي تحتوي أرقاماً */
-      table td[dir="ltr"],
-      table td[lang="en"] {
-        font-family: Arial, Helvetica, sans-serif !important;
-      }
     }
   </style>
 </head>
@@ -176,7 +124,6 @@
 
   <div class="container mx-auto px-4 py-8 relative z-10 max-w-7xl">
     
-    <!-- الهيدر -->
     <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10 text-white">
       <div class="w-full text-center md:text-right">
         <div class="flex items-center justify-center md:justify-start gap-3 mb-2">
@@ -201,10 +148,9 @@
       </div>
     </header>
 
-    <!-- الأزرار التبويبية -->
     <div class="tabs flex flex-wrap gap-2 mb-8 bg-white/10 p-1.5 rounded-2xl w-fit backdrop-blur-md no-print border border-white/20 shadow-sm mx-auto md:mx-0">
       <button class="tab-btn active px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 text-slate-700 bg-white shadow-sm" onclick="openTab('reportTab', this)">
-        <i class="fa-solid fa-chart-pie me-2 text-primary-600"></i> تقرير السنة الحالية <span class="num-en mx-1" lang="en">25/26</span>
+        <i class="fa-solid fa-chart-pie me-2 text-primary-600"></i> تقرير الوضع الحالي <span class="num-en mx-1" lang="en">25/26</span>
       </button>
       <button class="tab-btn px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 text-white hover:bg-white/20" onclick="openTab('planTab', this)">
         <i class="fa-solid fa-sliders me-2"></i> خطة العام القادم <span class="num-en mx-1" lang="en">26/27</span>
@@ -212,7 +158,7 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- تبويب تقرير السنة الحالية -->
+    <!-- تبويب تقرير السنة الحالية (ثابت ولا يتغير) -->
     <!-- ========================================== -->
     <section id="reportTab" class="tab-content active">
       
@@ -324,7 +270,7 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- تبويب خطة العام الدراسي -->
+    <!-- تبويب خطة العام الدراسي القادم (متغير تفاعلي) -->
     <!-- ========================================== -->
     <section id="planTab" class="tab-content">
       
@@ -371,23 +317,22 @@
               <label class="block text-xs font-bold text-slate-500 mb-1.5 flex justify-between">
                 <span>الرواتب الشهرية ($)</span> <i class="fa-solid fa-pen text-slate-300 no-print"></i>
               </label>
-              <!-- إضافة lang="en" لمنع النظام من تحويل الأرقام -->
-              <input id="monthlySalaries" type="number" lang="en" dir="ltr" value="19000" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:bg-white focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
+              <input id="monthlySalaries" type="number" lang="en" dir="ltr" value="24000" oninput="calculatePlan()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:bg-white focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-500 mb-1.5 flex justify-between">
                 <span>المصروفات الشهرية ($)</span> <i class="fa-solid fa-pen text-slate-300 no-print"></i>
               </label>
-              <input id="monthlyOps" type="number" lang="en" dir="ltr" value="1865" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:bg-white focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
+              <input id="monthlyOps" type="number" lang="en" dir="ltr" value="1865" oninput="calculatePlan()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:bg-white focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
             </div>
             <div class="grid grid-cols-2 gap-3">
                <div>
                   <label class="block text-xs font-bold text-slate-500 mb-1.5">عدد الأشهر</label>
-                  <input id="months" type="number" lang="en" dir="ltr" value="8" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
+                  <input id="months" type="number" lang="en" dir="ltr" value="8" oninput="calculatePlan()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
                </div>
                <div>
                   <label class="block text-xs font-bold text-slate-500 mb-1.5">تكاليف أخرى ($)</label>
-                  <input id="otherAnnualCosts" type="number" lang="en" dir="ltr" value="6940" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
+                  <input id="otherAnnualCosts" type="number" lang="en" dir="ltr" value="6940" oninput="calculatePlan()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
                </div>
             </div>
           </div>
@@ -403,11 +348,11 @@
             <div class="grid grid-cols-2 gap-3">
               <div>
                 <label class="block text-xs font-bold text-slate-500 mb-1.5">خصومات (%)</label>
-                <input id="discountRate" type="number" lang="en" dir="ltr" value="7" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-rose-600 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
+                <input id="discountRate" type="number" lang="en" dir="ltr" value="7" oninput="calculatePlan()" class="w-full bg-white border-2 border-slate-300 text-rose-600 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-500 mb-1.5">تحصيل (%)</label>
-                <input id="collectionRate" type="number" lang="en" dir="ltr" value="100" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-emerald-600 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
+                <input id="collectionRate" type="number" lang="en" dir="ltr" value="100" oninput="calculatePlan()" class="w-full bg-white border-2 border-slate-300 text-emerald-600 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
               </div>
             </div>
             <div>
@@ -415,13 +360,13 @@
                 <span>زيادة الأقساط المقترحة (%)</span> <i class="fa-solid fa-pen text-slate-300 no-print"></i>
               </label>
               <div class="relative flex items-center print:justify-center">
-                <input id="increaseRate" type="number" lang="en" dir="ltr" value="28.99" step="0.01" oninput="calculate()" class="w-full bg-blue-50 border-2 border-blue-300 text-blue-800 text-xl rounded-xl px-4 py-3 hover:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:border-blue-600 outline-none transition-all font-bold text-center pl-10 shadow-sm num-en" />
+                <input id="increaseRate" type="number" lang="en" dir="ltr" value="28.99" step="0.01" oninput="calculatePlan()" class="w-full bg-blue-50 border-2 border-blue-300 text-blue-800 text-xl rounded-xl px-4 py-3 hover:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:border-blue-600 outline-none transition-all font-bold text-center pl-10 shadow-sm num-en" />
                 <div class="absolute left-4 text-blue-500 font-bold text-lg no-print num-en" dir="ltr" lang="en">%</div>
               </div>
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-500 mb-1.5">تبرعات/دعم متوقع ($)</label>
-              <input id="donations" type="number" lang="en" dir="ltr" value="51500" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
+              <input id="donations" type="number" lang="en" dir="ltr" value="51500" oninput="calculatePlan()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
             </div>
           </div>
         </div>
@@ -437,19 +382,19 @@
               <label class="block text-xs font-bold text-slate-500 mb-1.5 flex justify-between">
                 <span>كلفة الباصات الشهرية ($)</span> <i class="fa-solid fa-pen text-slate-300 no-print"></i>
               </label>
-              <input id="monthlyTransportCost" type="number" lang="en" dir="ltr" value="4300" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
+              <input id="monthlyTransportCost" type="number" lang="en" dir="ltr" value="4300" oninput="calculatePlan()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-500 mb-1.5 flex justify-between">
                 <span>عدد المشتركين المتوقع</span> <i class="fa-solid fa-pen text-slate-300 no-print"></i>
               </label>
-              <input id="busStudents" type="number" lang="en" dir="ltr" value="266" oninput="calculate()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
+              <input id="busStudents" type="number" lang="en" dir="ltr" value="266" oninput="calculatePlan()" class="w-full bg-white border-2 border-slate-300 text-slate-900 text-base rounded-xl px-4 py-2.5 hover:border-primary-400 focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold shadow-sm text-center num-en" />
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-500 mb-1.5 flex justify-between">
                 <span>اشتراك الباص المقترح/طالب ($)</span> <i class="fa-solid fa-pen text-amber-300 no-print"></i>
               </label>
-              <input id="busFee" type="number" lang="en" dir="ltr" value="16.2" step="0.1" oninput="calculate()" class="w-full bg-amber-50 border-2 border-amber-300 text-amber-900 text-base rounded-xl px-4 py-2.5 hover:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/20 focus:border-amber-600 outline-none transition-all font-bold shadow-sm text-center num-en" />
+              <input id="busFee" type="number" lang="en" dir="ltr" value="16.2" step="0.1" oninput="calculatePlan()" class="w-full bg-amber-50 border-2 border-amber-300 text-amber-900 text-base rounded-xl px-4 py-2.5 hover:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/20 focus:border-amber-600 outline-none transition-all font-bold shadow-sm text-center num-en" />
             </div>
           </div>
         </div>
@@ -537,8 +482,33 @@
   </div>
 
   <script>
-    // القيم المعتمدة والمثبتة بشكل دقيق
-    const defaultStages = [
+    // ========================================================
+    // 1. البيانات الثابتة لتقرير الوضع الحالي (لا تتغير أبداً)
+    // ========================================================
+    const reportData = {
+      stages: [
+        { name: 'الروضة', students: 41, fee: 250 },
+        { name: 'الأول - الرابع', students: 141, fee: 325 },
+        { name: 'الخامس - السادس', students: 65, fee: 400 },
+        { name: 'الإعدادي', students: 88, fee: 450 },
+        { name: 'العاشر العلمي', students: 25, fee: 550 },
+        { name: 'الحادي عشر العلمي', students: 0, fee: 550 },
+        { name: 'البكالوريا العلمي', students: 0, fee: 600 }
+      ],
+      salaries: 24000,
+      ops: 1865,
+      months: 8,
+      otherCosts: 6940,
+      transport: 4300,
+      discountRate: 0.07, // 7%
+      collectionRate: 1.00, // 100%
+      donations: 51500
+    };
+
+    // ========================================================
+    // 2. البيانات المتغيرة لخطة العام القادم (قابلة للتعديل)
+    // ========================================================
+    const defaultPlanStages = [
       { name: 'الروضة', students: 41, fee: 250 },
       { name: 'الأول - الرابع', students: 141, fee: 325 },
       { name: 'الخامس - السادس', students: 65, fee: 400 },
@@ -547,10 +517,9 @@
       { name: 'الحادي عشر العلمي', students: 0, fee: 550 },
       { name: 'البكالوريا العلمي', students: 0, fee: 600 }
     ];
+    let planStages = JSON.parse(JSON.stringify(defaultPlanStages));
 
-    let stages = JSON.parse(JSON.stringify(defaultStages));
-
-    // دوال مساعدة للتنسيق والعمليات الحسابية
+    // دوال مساعدة للتنسيق
     function money(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
     function pct(n) { return Math.round(n * 10) / 10 + '%'; }
     function val(id) { return Number(document.getElementById(id).value) || 0; }
@@ -571,6 +540,7 @@
       }
     }
 
+    // التنقل بين التبويبات
     function openTab(tabId, btn) {
       document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
       const tabBtns = document.querySelectorAll('.tab-btn');
@@ -585,40 +555,19 @@
       btn.classList.add('text-slate-700', 'bg-white', 'shadow-sm');
       const activeIcon = btn.querySelector('i');
       if(activeIcon) activeIcon.classList.add('text-primary-600');
-      calculate();
     }
 
-    function renderPlanTable() {
-      const tbody = document.querySelector('#feesTable tbody');
-      tbody.innerHTML = '';
-      stages.forEach((s, i) => {
-        const tr = document.createElement('tr');
-        tr.className = 'hover:bg-slate-50 transition-colors';
-        tr.innerHTML = `
-          <td class="p-3 font-semibold text-slate-700">${s.name}</td>
-          <td class="p-2 text-center">
-             <input type="number" lang="en" dir="ltr" class="w-24 text-center bg-white border-2 border-slate-300 rounded-lg px-2 py-1.5 hover:border-primary-400 focus:bg-white focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none text-sm font-bold shadow-sm transition-all print:w-full print:border-none print:shadow-none print:bg-transparent num-en" value="${s.students}" oninput="stages[${i}].students=Number(this.value)||0; renderReportTable(); calculate()" />
-          </td>
-          <td class="p-2 text-center">
-             <input type="number" lang="en" dir="ltr" class="w-24 text-center bg-white border-2 border-slate-300 rounded-lg px-2 py-1.5 hover:border-primary-400 focus:bg-white focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none text-sm font-bold shadow-sm transition-all print:w-full print:border-none print:shadow-none print:bg-transparent num-en" value="${s.fee}" oninput="stages[${i}].fee=Number(this.value)||0; renderReportTable(); calculate()" />
-          </td>
-          <td class="p-3 text-center font-bold text-blue-700 bg-blue-50/30 num-en" id="newFee-${i}" dir="ltr" lang="en" style="-webkit-print-color-adjust: exact; background-color: #eff6ff !important;">$0</td>
-          <td class="p-3 text-center text-slate-500 num-en" id="gross-${i}" dir="ltr" lang="en">$0</td>
-          <td class="p-3 text-center font-bold text-emerald-700 bg-emerald-50/30 num-en" id="net-${i}" dir="ltr" lang="en" style="-webkit-print-color-adjust: exact; background-color: #ecfdf5 !important;">$0</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function renderReportTable() {
+    // ========================================================
+    // دالة إنشاء تقرير الوضع الحالي (تستدعى مرة واحدة فقط ولا تتأثر بالمدخلات)
+    // ========================================================
+    function initReportTab() {
       const tbody = document.querySelector('#reportFeesTable tbody');
-      if (!tbody) return;
       tbody.innerHTML = '';
       let totalStudents = 0, totalGross = 0, totalNet = 0;
       
-      stages.forEach((s) => {
+      reportData.stages.forEach((s) => {
         const gross = s.students * s.fee;
-        const net = s.students * s.fee * (1 - (val('discountRate')/100)) * (val('collectionRate')/100);
+        const net = s.students * s.fee * (1 - reportData.discountRate) * reportData.collectionRate;
         totalStudents += s.students;
         totalGross += gross;
         totalNet += net;
@@ -647,9 +596,80 @@
           <td class="p-3 text-center text-primary-700 num-en" dir="ltr" lang="en">${money(totalNet)}</td>
       `;
       tbody.appendChild(trSum);
+
+      const educationCost = (reportData.salaries + reportData.ops) * reportData.months + reportData.otherCosts;
+      const annualBusCost = reportData.transport * reportData.months;
+      const reportTotalCost = educationCost + annualBusCost;
+      const reportCollected = reportData.donations;
+      const reportGap = reportCollected - reportTotalCost;
+      const reportCoverage = reportTotalCost > 0 ? reportCollected / reportTotalCost * 100 : 0;
+
+      setText('reportStudents', totalStudents.toLocaleString('en-US'));
+      setText('reportTotalCost', money(reportTotalCost));
+      setText('reportCollected', money(reportCollected));
+      
+      const elReportGap = document.getElementById('reportGap');
+      elReportGap.textContent = (reportGap >= 0 ? '+' : '-') + money(Math.abs(reportGap));
+      
+      setText('rSalaryMonthly', money(reportData.salaries));
+      setText('rSalaryAnnual', money(reportData.salaries * reportData.months));
+      setText('rTransportMonthly', money(reportData.transport));
+      setText('rTransportAnnual', money(annualBusCost));
+      setText('rOpsMonthly', money(reportData.ops));
+      setText('rOpsAnnual', money(reportData.ops * reportData.months));
+      setText('rOther', money(reportData.otherCosts));
+      setText('rTotalCost', money(reportTotalCost));
+      setText('rGrossTuition', money(totalGross));
+      setText('rCollected', money(reportCollected));
+      
+      const tuitionCollectionGap = totalGross - reportCollected;
+      const discountImpact = totalGross * reportData.discountRate;
+      const discountImpactRate = totalGross > 0 ? discountImpact / totalGross * 100 : 0;
+      const remainingGap = tuitionCollectionGap - discountImpact;
+      
+      setText('rTuitionCollectionGap', money(tuitionCollectionGap));
+      setText('rDiscountImpact', money(discountImpact));
+      setText('rDiscountImpactRate', pct(discountImpactRate));
+      setText('rRemainingGap', money(remainingGap));
+      
+      const elRCoverage = document.getElementById('rCoverage');
+      elRCoverage.textContent = pct(reportCoverage);
+      elRCoverage.className = `p-4 font-bold text-left num-en ${reportCoverage >= 100 ? 'text-emerald-600' : 'text-rose-600'}`;
+      
+      const elRGap = document.getElementById('rGap');
+      elRGap.textContent = (reportGap >= 0 ? '+' : '-') + money(Math.abs(reportGap));
+      
+      setText('rCostPerStudent', totalStudents > 0 ? money(reportTotalCost / totalStudents) : '$0');
+      setText('rCollectedPerStudent', totalStudents > 0 ? money(reportCollected / totalStudents) : '$0');
     }
 
-    function calculate() {
+    // ========================================================
+    // رسم وحساب خطة العام القادم (التبويب التفاعلي)
+    // ========================================================
+    function renderPlanTable() {
+      const tbody = document.querySelector('#feesTable tbody');
+      tbody.innerHTML = '';
+      planStages.forEach((s, i) => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50 transition-colors';
+        tr.innerHTML = `
+          <td class="p-3 font-semibold text-slate-700">${s.name}</td>
+          <td class="p-2 text-center">
+             <input type="number" lang="en" dir="ltr" class="w-24 text-center bg-white border-2 border-slate-300 rounded-lg px-2 py-1.5 hover:border-primary-400 focus:bg-white focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none text-sm font-bold shadow-sm transition-all print:w-full print:border-none print:shadow-none print:bg-transparent num-en" value="${s.students}" oninput="planStages[${i}].students=Number(this.value)||0; calculatePlan()" />
+          </td>
+          <td class="p-2 text-center">
+             <input type="number" lang="en" dir="ltr" class="w-24 text-center bg-white border-2 border-slate-300 rounded-lg px-2 py-1.5 hover:border-primary-400 focus:bg-white focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none text-sm font-bold shadow-sm transition-all print:w-full print:border-none print:shadow-none print:bg-transparent num-en" value="${s.fee}" oninput="planStages[${i}].fee=Number(this.value)||0; calculatePlan()" />
+          </td>
+          <td class="p-3 text-center font-bold text-blue-700 bg-blue-50/30 num-en" id="newFee-${i}" dir="ltr" lang="en" style="-webkit-print-color-adjust: exact; background-color: #eff6ff !important;">$0</td>
+          <td class="p-3 text-center text-slate-500 num-en" id="gross-${i}" dir="ltr" lang="en">$0</td>
+          <td class="p-3 text-center font-bold text-emerald-700 bg-emerald-50/30 num-en" id="net-${i}" dir="ltr" lang="en" style="-webkit-print-color-adjust: exact; background-color: #ecfdf5 !important;">$0</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function calculatePlan() {
+      // قراءة القيم من الحقول في شاشة الخطة
       const salaries = val('monthlySalaries');
       const ops = val('monthlyOps');
       const months = val('months');
@@ -664,7 +684,7 @@
 
       let totalStudents = 0, grossTuition = 0, increasedTuition = 0, netTuition = 0;
 
-      stages.forEach((s, i) => {
+      planStages.forEach((s, i) => {
         const newFee = s.fee * (1 + increaseRate);
         const gross = s.students * s.fee;
         const net = s.students * newFee * (1 - discountRate) * collectionRate;
@@ -688,6 +708,7 @@
       const busGap = annualBusRevenue - annualBusCost;
       const requiredBusFee = busStudents > 0 && months > 0 ? annualBusCost / (busStudents * months) : 0;
 
+      // تحديث فقط عناصر تبويب الخطة
       setText('totalStudents', totalStudents.toLocaleString('en-US'));
       setText('netRevenue', money(totalEducationRevenue));
       
@@ -729,50 +750,6 @@
       signedMoneyStyle('busGap', busGap);
       setText('requiredBusFee', money(requiredBusFee));
 
-      // تقرير السنة الحالية (25-26)
-      const reportTotalCost = educationCost + annualBusCost;
-      const reportCollected = donations;
-      const reportGap = reportCollected - reportTotalCost;
-      const reportCoverage = reportTotalCost > 0 ? reportCollected / reportTotalCost * 100 : 0;
-
-      setText('reportStudents', totalStudents.toLocaleString('en-US'));
-      setText('reportTotalCost', money(reportTotalCost));
-      setText('reportCollected', money(reportCollected));
-      
-      const elReportGap = document.getElementById('reportGap');
-      elReportGap.textContent = (reportGap >= 0 ? '+' : '-') + money(Math.abs(reportGap));
-      
-      setText('rSalaryMonthly', money(salaries));
-      setText('rSalaryAnnual', money(salaries * months));
-      setText('rTransportMonthly', money(monthlyTransportCost));
-      setText('rTransportAnnual', money(annualBusCost));
-      setText('rOpsMonthly', money(ops));
-      setText('rOpsAnnual', money(ops * months));
-      setText('rOther', money(otherAnnualCosts));
-      setText('rTotalCost', money(reportTotalCost));
-      setText('rGrossTuition', money(grossTuition));
-      setText('rCollected', money(reportCollected));
-      
-      const tuitionCollectionGap = grossTuition - reportCollected;
-      const discountImpact = grossTuition * discountRate;
-      const discountImpactRate = grossTuition > 0 ? discountImpact / grossTuition * 100 : 0;
-      const remainingGap = tuitionCollectionGap - discountImpact;
-      
-      setText('rTuitionCollectionGap', money(tuitionCollectionGap));
-      setText('rDiscountImpact', money(discountImpact));
-      setText('rDiscountImpactRate', pct(discountImpactRate));
-      setText('rRemainingGap', money(remainingGap));
-      
-      const elRCoverage = document.getElementById('rCoverage');
-      elRCoverage.textContent = pct(reportCoverage);
-      elRCoverage.className = `p-4 font-bold text-left num-en ${reportCoverage >= 100 ? 'text-emerald-600' : 'text-rose-600'}`;
-      
-      const elRGap = document.getElementById('rGap');
-      elRGap.textContent = (reportGap >= 0 ? '+' : '-') + money(Math.abs(reportGap));
-      
-      setText('rCostPerStudent', totalStudents > 0 ? money(reportTotalCost / totalStudents) : '$0');
-      setText('rCollectedPerStudent', totalStudents > 0 ? money(reportCollected / totalStudents) : '$0');
-
       updateDecisionAlert(educationGap, coverageRate, increasedTuition, discountRate, collectionRate);
     }
 
@@ -804,10 +781,10 @@
       }
     }
 
-    // استعادة الأرقام الافتراضية
+    // استعادة أرقام الخطة الافتراضية
     function resetDefaults() {
-      stages = JSON.parse(JSON.stringify(defaultStages));
-      document.getElementById('monthlySalaries').value = 19000;
+      planStages = JSON.parse(JSON.stringify(defaultPlanStages));
+      document.getElementById('monthlySalaries').value = 24000;
       document.getElementById('monthlyOps').value = 1865;
       document.getElementById('months').value = 8;
       document.getElementById('otherAnnualCosts').value = 6940;
@@ -822,19 +799,16 @@
       document.body.style.opacity = 0.5;
       setTimeout(() => {
         renderPlanTable();
-        renderReportTable();
-        calculate();
+        calculatePlan(); // تحديث الخطة فقط
         fixInputNumerals();
         document.body.style.opacity = 1;
       }, 150);
     }
 
     // ===================================================
-    // تحويل الأرقام الهندية (٠١٢٣...) إلى عربية (0123...)
-    // في جميع حقول الإدخال — سواء عند التحميل أو الكتابة
+    // تحويل الأرقام الهندية إلى إنجليزية
     // ===================================================
     function toWesternDigits(s) {
-      // تحويل الأرقام العربية-الهندية (U+0660–U+0669) إلى أرقام غربية
       return String(s).replace(/[\u0660-\u0669]/g, function(d) {
         return d.charCodeAt(0) - 0x0660;
       });
@@ -847,7 +821,6 @@
       });
     }
 
-    // اعتراض أي إدخال للمستخدم وتحويله فوراً
     document.addEventListener('input', function(e) {
       if (e.target.tagName === 'INPUT') {
         var pos = e.target.selectionStart;
@@ -859,29 +832,23 @@
       }
     }, true);
 
+    // ===================================================
     // التهيئة عند تحميل الصفحة لأول مرة
+    // ===================================================
     window.onload = () => {
-      renderPlanTable();
-      renderReportTable();
-      calculate();
-      // تصحيح أي أرقام هندية بعد التهيئة
+      initReportTab(); // بناء التقرير الثابت مرة واحدة
+      renderPlanTable(); // بناء جدول الخطة
+      calculatePlan(); // حساب بيانات الخطة
       setTimeout(fixInputNumerals, 100);
     };
 
-    // ===================================================
-    // إجبار الأرقام الغربية (0-9) عند الطباعة
-    // نضيف lang="en" مؤقتاً على <html> لمنع المتصفح
-    // من تحويل الأرقام إلى الصيغة الهندية
-    // ===================================================
     window.addEventListener('beforeprint', () => {
-      // تطبيق خط Arial على كل عناصر الأرقام
       document.querySelectorAll('.num-en, [dir="ltr"], [lang="en"]').forEach(el => {
         el.style.fontFamily = 'Arial, Helvetica, sans-serif';
       });
     });
 
     window.addEventListener('afterprint', () => {
-      // إزالة التعديل بعد الطباعة (يعود للخط الأصلي)
       document.querySelectorAll('.num-en, [dir="ltr"], [lang="en"]').forEach(el => {
         el.style.fontFamily = '';
       });
